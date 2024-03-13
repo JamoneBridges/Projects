@@ -1,7 +1,7 @@
 /* Please Note that the additional * on each line is
  * <-- not required but helps make it clear that the line is part of a comment.
- * The following line is to separate the questions of the deliverables for clarity. 
- #######################################################################################################################
+ * The following line is to separate the questions for clarity. 
+ ########################################################################################################################
  */
 
 # A test to verify that the database was imported successfully.
@@ -16,7 +16,7 @@ SELECT *							# Show all field/columns
 
 #########################################################################################################################    
 
-# Question 1.1 - How many flights were there in 2018 and 2019 separately?
+# How many flights were there in 2018 and 2019 separately?
 SELECT YEAR(airtraffic.flights.FlightDate) AS FlightYear, 			# Show year only from date field and name FlightYear
 	COUNT(YEAR(airtraffic.flights.FlightDate)) AS FlightCount 		# Show and count of rows for a field
 	FROM airtraffic.flights 										# Tells the query to use table flights
@@ -25,16 +25,18 @@ SELECT YEAR(airtraffic.flights.FlightDate) AS FlightYear, 			# Show year only fr
 # 2018			|	3218653
 # 2019			|	3302708
 
+#########################################################################################################################
 
-# Question 1.2 - In total, how many flights were cancelled or depared late over both years?
+# In total, how many flights were cancelled or depared late over both years?
 SELECT SUM(IF(airtraffic.flights.DepDelay > 0, 1, 0)) AS DelayedFlights,	# First - if there is a delay mark field as an one. Second - sum all delay fields with an one
 	SUM(if(airtraffic.flights.Cancelled > 0, 1, 0)) AS CancelledFlights		# First - if the flight is cancelled mark field as an one. Second - sum all cancellation fields with an one
 	FROM airtraffic.flights;												# Tells the query to use table flights
 # DelayedFlights 	|	CancelledFlights
 # 2542442			|	92363
 
+#########################################################################################################################
 
-# Question 1.3 Show the number of flights that were cancelled broken down by the reason for cancellation.
+# Show the number of flights that were cancelled broken down by the reason for cancellation.
 SELECT SUM(IF(airtraffic.flights.CancellationReason = "Carrier", 1, 0)) AS CarrierCancellation, 					# First - if the cancellation reason is string Carrier mark field as an one. Second - sum all cancellation fields with an one
     SUM(IF(airtraffic.flights.CancellationReason = "National Air System", 1, 0)) AS NationalAirSystemCancellation,  # First - if the cancellation reason is string National Air System mark field as an one. Second - sum all National Air System fields with an one
     SUM(IF(airtraffic.flights.CancellationReason = "Security", 1, 0)) AS SecurityCancellation,						# First - if the cancellation reason is string Security mark field as an one. Second - sum all Security fields with an one
@@ -44,8 +46,9 @@ SELECT SUM(IF(airtraffic.flights.CancellationReason = "Carrier", 1, 0)) AS Carri
 # CarrierCancellation	|	NationalAirSystemCancellation	|	SecurityCancellation	|	WeatherCancellation
 # 34141					|	7962							|	35						|	50225
 
+#########################################################################################################################
 
-/* Question 1.4 For each month in 2019, report both the total number of flights and percentage of flights cancelled.
+/* For each month in 2019, report both the total number of flights and percentage of flights cancelled.
  * Based on your results, what might you say about the cyclic nature oof airline revenue?
  */
 SELECT YEAR(airtraffic.flights.FlightDate) AS Year,					# Show year from the FlightDate field
@@ -77,9 +80,10 @@ SELECT YEAR(airtraffic.flights.FlightDate) AS Year,					# Show year from the Fli
  * generation. In short, nice weather generates more revenue.
  */
  
-############################################################################################################################
+#########################################################################################################################
+#########################################################################################################################
 
-# Question 2.1 Create two new tables, one for each year (2018 and 2019) showing the total miles
+# Create two new tables, one for each year (2018 and 2019) showing the total miles
 # traveled and number of flights broken down by airline.
 
 # Create table and input 2018 data from query
@@ -137,9 +141,10 @@ SELECT a2019.Reporting_Airline,
  * 0.12% in distance.
  */
 
-#########################################################################################################
+#########################################################################################################################
+#########################################################################################################################
 
-# Question 3.1 What are the names of the 10 most popular destination airports overall?
+# What are the names of the 10 most popular destination airports overall?
 # For this question, generate a SQL query that first joins flights and airports then
 # does the necessary aggregation.
 SELECT a.AirportName,						# Show field name AirportName from airtraffic.airports
@@ -164,8 +169,10 @@ SELECT a.AirportName,						# Show field name AirportName from airtraffic.airport
 # Minneapolis-St Paul International							|	165367
 # Chicago Midway International								|	165007
 
+#########################################################################################################################
+#########################################################################################################################
 
-# Question 3.2 Answer the same question but using a subquery to aggregate & limit the
+# The same question but using a subquery to aggregate & limit the
 # flight data before your join with the airport information, hence optimizing your query runtime.
 SELECT a.AirportName,											# Show field name AirportName from airtraffic.airports
 	d.DestCount													# Show field name DestCount from subquery named d
@@ -188,9 +195,10 @@ SELECT a.AirportName,											# Show field name AirportName from airtraffic.ai
  * the top ten, and then join/link the name of the airport names by ID, which is a lot less work. 
  */
  
- ####################################################################################################################
+#########################################################################################################################
+#########################################################################################################################
  
- /* Question 4.1 A flight's tail number is the actual number affixed to the fuselage of an aircraft,
+ /* A flight's tail number is the actual number affixed to the fuselage of an aircraft,
   * much like a car license plate. As such, each plane has a unique tail number and the number of
   * unique tail numbers for each airline should approximate how many planes the airline operates in
   * total. Using this information, determine the number of unique aircrafts each airline operated in
@@ -212,8 +220,9 @@ SELECT t.Reporting_Airline,											# Pick field name Reporting Airline from s
 # DL					|	989
 # WN					|	755
 
+#########################################################################################################################
     
-/* Question 4.2 Similarly, the total miles traveled by each airline gives an idea of total fuel costs
+/* Similarly, the total miles traveled by each airline gives an idea of total fuel costs
  * and the distance traveled per plane gives an approximation of total equipment costs. What is the
  * average distance traveled per aircraft for each of the three airlines?
  */
@@ -258,9 +267,10 @@ SELECT t.Reporting_Airline,											# Show field name Reporting Airline from s
  * growth is slower.
  */
  
- ###########################################################################################################
+#########################################################################################################################
+#########################################################################################################################
  
-/* Question 5.1 Next, we will look into on-time performance more granularly in relation
+/* Next, we will look into on-time performance more granularly in relation
  * to the time of departure. We can break up the departure times into three categories as follows:
  * CASE
  *   WHEN HOUR(CRSDepTime) BETWEEN 7 AND 11 THEN "1-morning"
@@ -305,8 +315,9 @@ SELECT AVG(airtraffic.flights.DepDelay) AS AvgDelay,				# Calculates avg of Depa
  * delay times to decrease.
  */
  
+#########################################################################################################################
 
-# Question 5.2 Now, find the average departure delay for each airport and time-of-day combination.
+# Now, find the average departure delay for each airport and time-of-day combination.
 SELECT a.AirportName,													# Show Airport name from airport table
 	d.AvgDelay,															# Show AvgDelay from subquery
     d.time_of_day														# Show time_of_day from subquery
@@ -325,8 +336,9 @@ SELECT a.AirportName,													# Show Airport name from airport table
     LEFT JOIN airtraffic.airports as a									# Join/Link with table airtraffic.airports and name a
     ON a.AirportID = d.OriginAirportID;									# Join/Link the tables with airports.AirportID = flights.OriginAirportID;	
     
+#########################################################################################################################
     
-# Question 5.3 Next, limit your average departure delay analysis to morning delays and airports with at least 10,000 flights. 
+# Next, limit your average departure delay analysis to morning delays and airports with at least 10,000 flights. 
 SELECT a.AirportName, AvgDelay, FlightCount, ab.time_of_day		# Show Airport name from airport table, AvgDelay from subquery, FlightCount from subquery, and time_of_day from subquery
 	FROM (														# Tells the query to use data from the subquery. The subquery is performed first
 		SELECT f.OriginAirportID,								# Pick Origin Airport ID from flight table
@@ -358,8 +370,9 @@ SELECT a.AirportName, AvgDelay, FlightCount, ab.time_of_day		# Show Airport name
 # Bob Hope								|	2.3753		|	15303		|	1-morning
 # San Antonio International				|	3.6343		|	16144		|	1-morning
 
-    
-# Question 5.4 By extending the query from the previous question, name the top-10 airports (with >10000 flights) with
+#########################################################################################################################
+  
+# By extending the query from the previous question, name the top-10 airports (with >10000 flights) with
 # the highest average morning delay. In what cities are these airports located?
 SELECT a.AirportName,											# Show Airport name from airport table
 	SUBSTRING_INDEX(a.City, ",", 1) AS City,					# Show the city of the airport, substring_index removes the state and name City
